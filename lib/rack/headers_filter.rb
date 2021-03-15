@@ -18,6 +18,8 @@ module Rack
     private
 
     def allowed_host?(env)
+      return true if env['PATH_INFO'].to_s == '/healthcheck'
+
       domain_with_port = ActionDispatch::Http::URL.extract_domain env['HTTP_HOST'], 1
       domain = domain_with_port.gsub(/:\d+$/, '')
       ALLOWED_HOSTS.include?(domain)
